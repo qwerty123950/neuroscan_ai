@@ -1,0 +1,176 @@
+# =============================================================================
+# NeuroScan AI — .gitignore
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Python virtual environments
+# -----------------------------------------------------------------------------
+.venv/
+venv/
+env/
+ENV/
+.env/
+virtualenv/
+
+# -----------------------------------------------------------------------------
+# Python bytecode and build artifacts
+# -----------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+.eggs/
+wheels/
+sdist/
+*.pyo
+*.pyd
+MANIFEST
+
+# -----------------------------------------------------------------------------
+# Datasets  (keep directory placeholders via .gitkeep)
+# -----------------------------------------------------------------------------
+# Ignore contents of each data subdir, not the dir itself.
+# (Ignoring the directory directly would prevent negation of .gitkeep.)
+data/raw/*
+data/processed/*
+data/external/*
+data/interim/*
+# Preserve placeholder files so Git tracks the empty directories
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/external/.gitkeep
+!data/interim/.gitkeep
+
+# -----------------------------------------------------------------------------
+# Trained model weights and checkpoints
+# -----------------------------------------------------------------------------
+# Scope to top-level models/ only so src/neuroscan/models/ is not matched
+/models/
+*.pth
+*.pt
+*.ckpt
+*.onnx
+*.pb
+*.h5
+*.keras
+# Preserve top-level models/ placeholder
+!models/.gitkeep
+# Explicitly allow the source-package models subpackage directory
+!src/neuroscan/models/
+!src/neuroscan/models/.gitkeep
+
+# -----------------------------------------------------------------------------
+# Experiment outputs, logs, and caches
+# -----------------------------------------------------------------------------
+# Ignore contents, not the directories, so .gitkeep negation works
+reports/figures/*
+reports/metrics/*
+!reports/figures/.gitkeep
+!reports/metrics/.gitkeep
+outputs/
+runs/
+logs/
+*.log
+
+# MLflow / Weights & Biases / TensorBoard
+mlruns/
+mlartifacts/
+wandb/
+lightning_logs/
+
+# Grad-CAM and visualization outputs
+gradcam_outputs/
+
+# -----------------------------------------------------------------------------
+# Jupyter Notebook checkpoints
+# -----------------------------------------------------------------------------
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# -----------------------------------------------------------------------------
+# Environment and secret files
+# -----------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.secret
+secrets/
+config/local_settings.py
+
+# -----------------------------------------------------------------------------
+# Testing and coverage artifacts
+# -----------------------------------------------------------------------------
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+*.cover
+.hypothesis/
+
+# -----------------------------------------------------------------------------
+# Type-checking and linting caches
+# -----------------------------------------------------------------------------
+.mypy_cache/
+.ruff_cache/
+.pytype/
+
+# -----------------------------------------------------------------------------
+# Distribution / packaging
+# -----------------------------------------------------------------------------
+*.tar.gz
+*.zip
+*.whl
+
+# -----------------------------------------------------------------------------
+# IDE and editor files
+# -----------------------------------------------------------------------------
+# VS Code
+.vscode/
+*.code-workspace
+
+# PyCharm / JetBrains
+.idea/
+*.iml
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+\#*\#
+.\#*
+
+# -----------------------------------------------------------------------------
+# Operating system files
+# -----------------------------------------------------------------------------
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+.directory
+.Trash-*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# -----------------------------------------------------------------------------
+# Temporary and misc files
+# -----------------------------------------------------------------------------
+*.tmp
+*.bak
+*.orig
+*.pid
+.cache/
+tmp/
+temp/
