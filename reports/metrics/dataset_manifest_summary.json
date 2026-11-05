@@ -1,0 +1,50 @@
+{
+  "duplicate_analysis": {
+    "cross_class_conflict_groups": 0,
+    "cross_split_groups": 111,
+    "testing_only_duplicate_groups": 17,
+    "total_affected_images": 599,
+    "total_duplicate_groups": 277,
+    "training_only_duplicate_groups": 149,
+    "unique_cross_split_testing_images": 114,
+    "unique_cross_split_training_images": 115
+  },
+  "manifest_sha256": "70c802c63b8c9e033d2a92b6ab741c71889c008e322438a1841ee302d38f0470",
+  "splits": {
+    "Testing": {
+      "classes_excluded": {
+        "glioma": 5,
+        "meningioma": 100,
+        "notumor": 9,
+        "pituitary": 0
+      },
+      "classes_included": {
+        "glioma": 395,
+        "meningioma": 300,
+        "notumor": 391,
+        "pituitary": 400
+      },
+      "classes_original": {
+        "glioma": 400,
+        "meningioma": 400,
+        "notumor": 400,
+        "pituitary": 400
+      },
+      "excluded": 114,
+      "included": 1486,
+      "total_original": 1600
+    },
+    "Training": {
+      "classes": {
+        "glioma": 1400,
+        "meningioma": 1400,
+        "notumor": 1400,
+        "pituitary": 1400
+      },
+      "excluded": 0,
+      "included": 5600,
+      "total_original": 5600
+    }
+  },
+  "total_images": 7200
+}

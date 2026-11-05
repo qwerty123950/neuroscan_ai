@@ -1,0 +1,61 @@
+# NeuroScan AI — Baseline Generic CNN Training & Experiment Configuration
+# Configured for Base Paper Reproduction (Gómez-Guzmán et al., Electronics 2023, 12(4), 955)
+
+experiment:
+  name: "paper_generic_cnn"
+  seed: 42
+  device: "cpu"
+
+data:
+  manifest_path: "data/processed/dataset_manifest.csv"
+  img_size: 256            # Paper Figure 2 (256x256)
+  batch_size: 16           # Paper Table 2
+  num_workers: 0
+  pin_memory: false
+  val_ratio: 0.2           # 80% train (4,480 samples), 20% validation (1,120 samples)
+  normalize_mode: "rescale_only"  # Paper Table 1: rescale 1/255 to [0.0, 1.0]
+  brightness_mode: "paper_literal"  # Paper Table 1: [0.0, 0.7] (or 'safe_jitter' / 'none')
+
+model:
+  architecture: "PaperGenericCNN"  # Paper Figure 2 (17-layer Generic CNN)
+  in_channels: 3
+  num_classes: 4
+  dropout: 0.5             # Paper Figure 2 caption (configurable to 0.2 per Table 2)
+  dense_units: null        # Direct dense head as specified in Figure 2
+  pretrained: false        # Generic CNN trained from scratch
+
+training:
+  epochs: 10               # Paper Table 2 (10 epochs per fold)
+  optimizer:
+    name: "Adam"           # Paper Table 2
+    learning_rate: 0.0001  # Paper Table 2 (1e-4)
+    betas: [0.9, 0.999]
+    eps: 1e-8
+    weight_decay: 0.0      # No weight decay specified in paper
+  scheduler:
+    name: null             # No LR scheduler specified in paper
+  loss:
+    name: "CrossEntropyLoss"
+    label_smoothing: 0.0
+
+validation:
+  eval_frequency: 1        # Evaluate validation split every epoch
+  early_stopping:
+    enabled: false         # Paper trains for 10 epochs without early stopping
+    monitor: "val_macro_f1"
+    mode: "max"
+    patience: 5
+    min_delta: 0.001
+  best_checkpoint:
+    monitor: "val_macro_f1"
+    mode: "max"
+
+evaluation_policy:
+  clean_test_quarantine: true  # 1,486 clean test samples strictly excluded from training & model selection
+
+logging:
+  metrics_output_dir: "reports/metrics"
+  checkpoint_dir: "models/checkpoints"
+  checkpoint_filename: "paper_generic_cnn_best.pt"
+  log_confusion_matrix: true
+  track_per_class_metrics: true  # precision, recall, f1 for glioma, meningioma, notumor, pituitary

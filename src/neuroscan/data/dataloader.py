@@ -59,8 +59,15 @@ def create_dataloaders(
     root = Path(project_root).resolve() if project_root else get_default_project_root()
 
     # Preprocessing pipelines
-    train_transform = get_train_transforms(img_size=config.img_size)
-    eval_transform = get_eval_transforms(img_size=config.img_size)
+    train_transform = get_train_transforms(
+        img_size=config.img_size,
+        normalize_mode=getattr(config, "normalize_mode", "rescale_only"),
+        brightness_mode=getattr(config, "brightness_mode", "paper_literal"),
+    )
+    eval_transform = get_eval_transforms(
+        img_size=config.img_size,
+        normalize_mode=getattr(config, "normalize_mode", "rescale_only"),
+    )
 
     # Dataset instances
     train_dataset = BrainTumorMRIDataset(

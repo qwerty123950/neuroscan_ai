@@ -32,25 +32,27 @@ sdist/
 MANIFEST
 
 # -----------------------------------------------------------------------------
-# Datasets  (keep directory placeholders via .gitkeep)
+# Datasets (preserve directory structure and processed manifests)
 # -----------------------------------------------------------------------------
-# Ignore contents of each data subdir, not the dir itself.
-# (Ignoring the directory directly would prevent negation of .gitkeep.)
+# Ignore raw, external, and interim data contents
 data/raw/*
-data/processed/*
 data/external/*
 data/interim/*
-# Preserve placeholder files so Git tracks the empty directories
+data/processed/*
+
+# Preserve directory placeholders
 !data/raw/.gitkeep
-!data/processed/.gitkeep
 !data/external/.gitkeep
 !data/interim/.gitkeep
+!data/processed/.gitkeep
+
+# Track processed dataset manifest (essential metadata for splits & verification)
+!data/processed/dataset_manifest.csv
 
 # -----------------------------------------------------------------------------
 # Trained model weights and checkpoints
 # -----------------------------------------------------------------------------
-# Scope to top-level models/ only so src/neuroscan/models/ is not matched
-/models/
+# Large model weight file patterns
 *.pth
 *.pt
 *.ckpt
@@ -58,20 +60,31 @@ data/interim/*
 *.pb
 *.h5
 *.keras
-# Preserve top-level models/ placeholder
+*.bin
+*.safetensors
+
+# Ignore models directory contents but preserve directory structure
+models/*
 !models/.gitkeep
-# Explicitly allow the source-package models subpackage directory
+!models/checkpoints/
+models/checkpoints/*
+!models/checkpoints/.gitkeep
+
+# Explicitly ensure source models package is always tracked
 !src/neuroscan/models/
-!src/neuroscan/models/.gitkeep
+!src/neuroscan/models/**
 
 # -----------------------------------------------------------------------------
 # Experiment outputs, logs, and caches
 # -----------------------------------------------------------------------------
-# Ignore contents, not the directories, so .gitkeep negation works
 reports/figures/*
-reports/metrics/*
 !reports/figures/.gitkeep
+
+reports/metrics/*
 !reports/metrics/.gitkeep
+# Track verified experiment training and dataset audit summaries
+!reports/metrics/*.json
+
 outputs/
 runs/
 logs/
@@ -120,10 +133,14 @@ htmlcov/
 .pytype/
 
 # -----------------------------------------------------------------------------
-# Distribution / packaging
+# Distribution and archives
 # -----------------------------------------------------------------------------
 *.tar.gz
+*.tar
+*.gz
 *.zip
+*.7z
+*.rar
 *.whl
 
 # -----------------------------------------------------------------------------

@@ -3,7 +3,7 @@ NeuroScan AI — Brain Tumor MRI Dataset Module.
 """
 import csv
 from pathlib import Path
-from typing import Callable, Dict, List, Optional, Tuple, Union
+from typing import Callable, Dict, List, Optional, Sequence, Tuple, Union
 
 from PIL import Image
 import torch
@@ -55,6 +55,7 @@ class BrainTumorMRIDataset(Dataset):
         manifest_path: Optional[Union[str, Path]] = None,
         project_root: Optional[Union[str, Path]] = None,
         transform: Optional[Callable] = None,
+        sample_indices: Optional[Sequence[int]] = None,
     ) -> None:
         if split not in VALID_SPLITS:
             raise ValueError(
@@ -80,6 +81,16 @@ class BrainTumorMRIDataset(Dataset):
 
         self.samples: List[Tuple[Path, int, str]] = []  # (abs_path, label_idx, rel_path)
         self._load_and_filter_manifest()
+
+        if sample_indices is not None:
+            total_loaded = len(self.samples)
+            for idx in sample_indices:
+                if not isinstance(idx, int) or idx < 0 or idx >= total_loaded:
+                    raise IndexError(
+                        f"Sample index {idx} is out of bounds for filtered split '{split}' "
+                        f"with {total_loaded} samples."
+                    )
+            self.samples = [self.samples[i] for i in sample_indices]
 
     def _load_and_filter_manifest(self) -> None:
         """Parse manifest, validate schema and labels, enforce path containment, and filter."""

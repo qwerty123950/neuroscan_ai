@@ -1,10 +1,12 @@
 # NeuroScan AI — Data & Preprocessing Configuration
+# Configured for Base Paper Reproduction (Gómez-Guzmán et al., 2023)
 
 data:
   manifest_path: "data/processed/dataset_manifest.csv"
-  img_size: 224
+  img_size: 256
   batch_size: 16
   num_workers: 0
   pin_memory: false
   seed: 42
-
+  normalize_mode: "rescale_only"
+  brightness_mode: "paper_literal"

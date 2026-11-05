@@ -1,0 +1,14 @@
+# =============================================================================
+# NeuroScan AI — Python Dependencies
+# =============================================================================
+
+# Core Deep Learning Framework & Transforms
+torch>=2.0.0
+torchvision>=0.15.0
+
+# Image Processing & Data Utilities
+Pillow>=9.0.0
+PyYAML>=6.0
+
+# Plotting & Visualization (optional, for dataset inspect scripts)
+matplotlib>=3.7.0

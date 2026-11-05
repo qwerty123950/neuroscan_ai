@@ -9,6 +9,7 @@ from neuroscan.data.dataset import (
     get_default_project_root,
 )
 from neuroscan.data.dataloader import ReproducibleDataLoader, create_dataloaders, seed_worker
+from neuroscan.data.split import create_train_val_datasets, get_stratified_split_indices
 from neuroscan.data.transforms import (
     IMAGENET_MEAN,
     IMAGENET_STD,
@@ -23,6 +24,8 @@ __all__ = [
     "DataConfig",
     "load_data_config",
     "create_dataloaders",
+    "create_train_val_datasets",
+    "get_stratified_split_indices",
     "ReproducibleDataLoader",
     "seed_worker",
     "get_train_transforms",
